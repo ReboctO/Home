@@ -156,3 +156,4 @@ C:\Users\User\Desktop\ASP_NET\MyFullStackApp\backend\obj\Debug\net8.0\refint\bac
 C:\Users\User\Desktop\ASP_NET\MyFullStackApp\backend\obj\Debug\net8.0\backend.pdb
 C:\Users\User\Desktop\ASP_NET\MyFullStackApp\backend\obj\Debug\net8.0\backend.genruntimeconfig.cache
 C:\Users\User\Desktop\ASP_NET\MyFullStackApp\backend\obj\Debug\net8.0\ref\backend.dll
+C:\Users\User\Desktop\ASP_NET\MyFullStackApp\backend\obj\Debug\net8.0\backend.sourcelink.json
