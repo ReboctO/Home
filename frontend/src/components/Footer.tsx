@@ -18,25 +18,7 @@ function Footer() {
             Address: 123 Main Street, Happy Valley, Cebu City
           </Typography>
         </Grid>
-        <div className="bg-[#4e342e] text-white p-4">
-          {" "}
-          {/* Replace with your actual background color */}
-          <div className="text-2xl font-bold mb-4">Links</div>
-          <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-1/3 mb-2 md:mb-0">
-              <div className="mb-1">About</div>
-              <div>Properties</div>
-            </div>
-            <div className="w-full md:w-1/3 mb-2 md:mb-0">
-              <div className="mb-1">Blog</div>
-              <div>Service</div>
-            </div>
-            <div className="w-full md:w-1/3">
-              <div className="mb-1">Contact</div>
-              <div>Gallery</div>
-            </div>
-          </div>
-        </div>
+
         <Grid item xs={12} md={4}>
           <Typography variant="body1">Newsletter</Typography>
           <Box

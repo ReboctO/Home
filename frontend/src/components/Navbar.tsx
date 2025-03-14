@@ -1,27 +1,40 @@
-// src/components/Navbar.tsx
 import { Button, AppBar, Toolbar, Typography, Box } from "@mui/material";
 import { useState } from "react";
 import AuthModal from "./AuthModal"; // Ensure correct casing in the import
+import { Link } from "react-router-dom";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: "#282828" }}>
+      <AppBar position="static" sx={{ backgroundColor: "#6b4f4f" }}>
         <Toolbar>
           <Typography
             variant="h6"
-            component="div"
+            component={Link}
             sx={{ flexGrow: 1, fontWeight: "bold" }}
+            to="/"
           >
             Quel "
           </Typography>
-          <Button color="inherit">About Us</Button>
-          <Button color="inherit">Service</Button>
+          <Button color="inherit" component={Link} to="/aboutUs">
+            About Us
+          </Button>
+          <Button color="inherit" component={Link} to="/service">
+            Service
+          </Button>
           <Button color="inherit">Pages</Button>
-          <Button color="inherit">Contact</Button>
-          <Button color="inherit" variant="outlined" sx={{ ml: 2 }}>
+          <Button color="inherit" component={Link} to="/contactUs">
+            Contact
+          </Button>
+          <Button
+            color="inherit"
+            variant="outlined"
+            sx={{ ml: 2 }}
+            component={Link}
+            to="/exploreProperties"
+          >
             Explore Properties
           </Button>
           <Button

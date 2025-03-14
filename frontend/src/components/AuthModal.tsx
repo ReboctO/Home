@@ -1,25 +1,72 @@
-// src/components/AuthModal.tsx
-import { Modal, Box, Typography, TextField, Button } from "@mui/material";
 import { useState } from "react";
+import {
+  Modal,
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Alert,
+  CircularProgress,
+} from "@mui/material";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { registerUser, loginUser } from "../api/authApi";
+import { useNavigate } from "react-router-dom";
 
 interface AuthModalProps {
   open: boolean;
   onClose: () => void;
 }
 
+const schema = z
+  .object({
+    username: z
+      .string()
+      .min(3, "Username must be at least 3 characters")
+      .optional(),
+    email: z.string().email("Invalid email"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+    confirmPassword: z.string().optional(),
+  })
+  .refine(
+    (data) => !data.confirmPassword || data.password === data.confirmPassword,
+    {
+      message: "Passwords do not match",
+      path: ["confirmPassword"],
+    }
+  );
+
 const AuthModal: React.FC<AuthModalProps> = ({ open, onClose }) => {
   const [isRegister, setIsRegister] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [serverError, setServerError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleAuth = () => {
-    if (isRegister && password !== confirmPassword) {
-      alert("Passwords do not match");
-      return;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: zodResolver(schema) });
+
+  const onSubmit = async (data: any) => {
+    setServerError(null);
+    setLoading(true);
+    try {
+      if (isRegister) {
+        await registerUser(data.username, data.email, data.password);
+      } else {
+        await loginUser(data.email, data.password);
+      }
+      navigate("/dashboard"); // Redirect to dashboard after login/register
+      onClose(); // Close modal on success
+    } catch (error: any) {
+      setServerError(
+        error.message || "Authentication failed. Please try again."
+      );
+    } finally {
+      setLoading(false);
     }
-    alert(`${isRegister ? "Registered" : "Logged in"} successfully!`);
-    onClose(); // Close the modal after authentication
   };
 
   return (
@@ -40,42 +87,55 @@ const AuthModal: React.FC<AuthModalProps> = ({ open, onClose }) => {
         <Typography variant="h5" sx={{ mb: 2, textAlign: "center" }}>
           {isRegister ? "Create an Account" : "Sign In"}
         </Typography>
-        <TextField
-          fullWidth
-          label="Email"
-          variant="outlined"
-          sx={{ mb: 2 }}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <TextField
-          fullWidth
-          label="Password"
-          type="password"
-          variant="outlined"
-          sx={{ mb: 2 }}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        {isRegister && (
+
+        {serverError && <Alert severity="error">{serverError}</Alert>}
+
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {isRegister && (
+            <TextField
+              fullWidth
+              label="Username"
+              {...register("username")}
+              error={!!errors.username}
+              helperText={errors.username?.message}
+              margin="normal"
+            />
+          )}
           <TextField
             fullWidth
-            label="Confirm Password"
-            type="password"
-            variant="outlined"
-            sx={{ mb: 2 }}
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            label="Email"
+            {...register("email")}
+            error={!!errors.email}
+            helperText={errors.email?.message}
+            margin="normal"
           />
-        )}
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          onClick={handleAuth}
-        >
-          {isRegister ? "Register" : "Login"}
-        </Button>
+          <TextField
+            fullWidth
+            label="Password"
+            type="password"
+            {...register("password")}
+            error={!!errors.password}
+            helperText={errors.password?.message}
+            margin="normal"
+          />
+
+          <Button
+            fullWidth
+            variant="contained"
+            type="submit"
+            sx={{ mt: 2 }}
+            disabled={loading}
+          >
+            {loading ? (
+              <CircularProgress size={24} />
+            ) : isRegister ? (
+              "Register"
+            ) : (
+              "Login"
+            )}
+          </Button>
+        </form>
+
         <Typography
           variant="body2"
           sx={{ mt: 2, textAlign: "center", cursor: "pointer" }}

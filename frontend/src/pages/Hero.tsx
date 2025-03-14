@@ -1,5 +1,4 @@
 import { Grid, Typography, Box } from "@mui/material";
-// import PropertyCarousel from "./PropertyCarousel";
 
 function Hero() {
   return (
@@ -65,7 +64,6 @@ function Hero() {
             position: "relative",
           }}
         >
-          {/* Replace with your actual image */}
           <Box
             sx={{ width: "100%", height: "100%", backgroundColor: "lightgray" }}
           />
@@ -93,7 +91,6 @@ function Hero() {
           </Box>
         </Grid>
       </Grid>
-      {/* <PropertyCarousel /> */}
     </div>
   );
 }
