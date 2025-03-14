@@ -22,7 +22,7 @@ const teamMembers = [
   },
 ];
 
-const AboutUs: React.FC = () => {
+const AboutUs = () => {
   return (
     <div className="bg-gray-100 py-12">
       <Container maxWidth="lg">

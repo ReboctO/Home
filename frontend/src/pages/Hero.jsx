@@ -1,4 +1,5 @@
 import { Grid, Typography, Box } from "@mui/material";
+import ExploreProperties from "./ExploreProperties";
 
 function Hero() {
   return (
@@ -28,7 +29,6 @@ function Hero() {
             yourself in a world where elegance meets comfort, and every detail
             is crafted to perfection.
           </Typography>
-          {/* Images (Placeholder - Replace with your actual images) */}
           <Box sx={{ display: "flex", gap: 2, mb: 4 }}>
             <Box sx={{ width: 80, height: 60, backgroundColor: "gray" }} />
             <Box sx={{ width: 80, height: 60, backgroundColor: "gray" }} />
@@ -43,8 +43,20 @@ function Hero() {
                 borderRadius: "50%",
                 backgroundColor: "white",
                 mr: 2,
+                overflow: "hidden", // Ensures image fits within the circle
               }}
-            />
+            >
+              <img
+                src="" // Replace with the actual path to your image
+                alt="User Image"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover", // Ensures the image fills the circle without distortion
+                }}
+              />
+            </Box>
+
             <Typography variant="body2">
               Let's Make Your Dream Home a Reality Get in Touch Today
             </Typography>
@@ -91,6 +103,7 @@ function Hero() {
           </Box>
         </Grid>
       </Grid>
+      <ExploreProperties />
     </div>
   );
 }

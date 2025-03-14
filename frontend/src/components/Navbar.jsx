@@ -12,8 +12,9 @@ function Navbar() {
         <Toolbar>
           <Typography
             variant="h6"
+            color="white"
             component={Link}
-            sx={{ flexGrow: 1, fontWeight: "bold" }}
+            sx={{ flexGrow: 1, fontWeight: "bold", textDecoration: "none" }}
             to="/"
           >
             Quel "

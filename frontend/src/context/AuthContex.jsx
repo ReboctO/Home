@@ -1,25 +1,17 @@
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-interface AuthContextType {
-  token: string | null;
-  login: (token: string) => void;
-  logout: () => void;
-}
+export const AuthContext = createContext(null);
 
-export const AuthContext = createContext<AuthContextType | null>(null);
-
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [token, setToken] = useState<string | null>(
-    localStorage.getItem("token")
-  );
+export const AuthProvider = ({ children }) => {
+  const [token, setToken] = useState(localStorage.getItem("token"));
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!token) navigate("/login");
   }, [token, navigate]);
 
-  const login = (newToken: string) => {
+  const login = (newToken) => {
     setToken(newToken);
     localStorage.setItem("token", newToken);
     navigate("/dashboard");

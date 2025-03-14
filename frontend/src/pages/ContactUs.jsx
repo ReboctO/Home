@@ -8,7 +8,7 @@ import {
   Paper,
 } from "@mui/material";
 
-const ContactUs: React.FC = () => {
+const ContactUs = () => {
   return (
     <div className="bg-gray-100 py-12">
       <Container maxWidth="md">

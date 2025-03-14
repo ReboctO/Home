@@ -14,11 +14,6 @@ import { z } from "zod";
 import { registerUser, loginUser } from "../api/authApi";
 import { useNavigate } from "react-router-dom";
 
-interface AuthModalProps {
-  open: boolean;
-  onClose: () => void;
-}
-
 const schema = z
   .object({
     username: z
@@ -37,9 +32,9 @@ const schema = z
     }
   );
 
-const AuthModal: React.FC<AuthModalProps> = ({ open, onClose }) => {
+const AuthModal = ({ open, onClose }) => {
   const [isRegister, setIsRegister] = useState(false);
-  const [serverError, setServerError] = useState<string | null>(null);
+  const [serverError, setServerError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -49,7 +44,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ open, onClose }) => {
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data) => {
     setServerError(null);
     setLoading(true);
     try {
@@ -60,9 +55,10 @@ const AuthModal: React.FC<AuthModalProps> = ({ open, onClose }) => {
       }
       navigate("/dashboard"); // Redirect to dashboard after login/register
       onClose(); // Close modal on success
-    } catch (error: any) {
+    } catch (error) {
       setServerError(
-        error.message || "Authentication failed. Please try again."
+        error.response?.data?.message ||
+          "Authentication failed. Please try again."
       );
     } finally {
       setLoading(false);

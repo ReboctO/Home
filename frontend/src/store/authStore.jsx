@@ -1,15 +1,9 @@
 import { create } from "zustand";
 
-type AuthState = {
-  token: string | null;
-  setToken: (token: string | null) => void;
-  logout: () => void;
-};
-
-export const useAuthStore = create<AuthState>((set) => ({
+const useAuthStore = create((set) => ({
   token: localStorage.getItem("token"),
   setToken: (token) => {
-    localStorage.setItem("token", token!);
+    localStorage.setItem("token", token);
     set({ token });
   },
   logout: () => {
@@ -17,3 +11,5 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ token: null });
   },
 }));
+
+export default useAuthStore;

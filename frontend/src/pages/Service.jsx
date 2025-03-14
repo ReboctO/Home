@@ -47,7 +47,7 @@ const services = [
   },
 ];
 
-const Services: React.FC = () => {
+const Services = () => {
   return (
     <div className="bg-gray-100 py-12">
       <Container maxWidth="lg">

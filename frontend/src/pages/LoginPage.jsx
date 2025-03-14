@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -11,7 +11,7 @@ const schema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-export default function Login() {
+const Login = () => {
   const {
     register,
     handleSubmit,
@@ -22,7 +22,7 @@ export default function Login() {
 
   const authContext = useContext(AuthContext);
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data) => {
     try {
       const response = await loginUser(data.email, data.password);
       authContext?.login(response.Token);
@@ -33,7 +33,9 @@ export default function Login() {
 
   return (
     <Container maxWidth="xs">
-      <Typography variant="h4">Login</Typography>
+      <Typography variant="h4" sx={{ mb: 2, textAlign: "center" }}>
+        Login
+      </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField
           fullWidth
@@ -41,6 +43,7 @@ export default function Login() {
           {...register("email")}
           error={!!errors.email}
           helperText={errors.email?.message}
+          margin="normal"
         />
         <TextField
           fullWidth
@@ -49,11 +52,14 @@ export default function Login() {
           {...register("password")}
           error={!!errors.password}
           helperText={errors.password?.message}
+          margin="normal"
         />
-        <Button fullWidth variant="contained" type="submit">
+        <Button fullWidth variant="contained" type="submit" sx={{ mt: 2 }}>
           Login
         </Button>
       </form>
     </Container>
   );
-}
+};
+
+export default Login;

@@ -84,7 +84,7 @@ const properties = [
   },
 ];
 
-const ExploreProperties: React.FC = () => {
+const ExploreProperties = () => {
   return (
     <div className="bg-gray-100 py-12">
       <Container maxWidth="lg">
